@@ -98,6 +98,8 @@ public class TestCases {
     }
 
 
+
+
     public Map<Integer, String> quickData() throws IOException {
         URL url = new URL("ftp://" + user + ":" + pass + "@" + address + ":21/1.txt");
         URLConnection conn = url.openConnection();
