@@ -86,7 +86,7 @@ public class TestCases {
         setIn(input);
         ClientMain.app();
         String[] responses = (bytes.toString().split(EOL));
-        String addedMessage = responses[responses.length - 4];
+        String addedMessage = responses[responses.length - 2];
         Pattern p = Pattern.compile("(?<=Added by id )+(\\d*)");
         Matcher m = p.matcher(addedMessage);
         String idString = null;
