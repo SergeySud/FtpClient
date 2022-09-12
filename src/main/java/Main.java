@@ -19,16 +19,16 @@ public class Main {
         Map<Integer, String> students = ConnectionHandler.connect(input);
         boolean running = true;
         while (running) {
-            System.out.println("Choose action: 1 - print list of students, 2 - get student's information by id," +
-                    " 3 - add student, 4 - remove student by id, 5 - upload changes, 6 - exit:");
+            System.out.println("Choose action: 1 - print a list of students, 2 - get a student's information by id," +
+                    " 3 - add a student, 4 - remove a student by id, 5 - upload changes, 6 - exit:");
             input = scanner.next();
             switch (input) {
-                case ("1") -> System.out.println(StudentActions.printStudents(students));
-                case ("2") -> System.out.println(StudentActions.getStudentById(students));
-                case ("3") -> System.out.println(StudentActions.addStudent(students));
-                case ("4") -> System.out.println(StudentActions.removeStudent(students));
-                case ("5") -> System.out.println(StudentActions.upload(students));
-                default -> running = false;
+                case ("1"): {System.out.println(StudentActions.printStudents(students)); break;}
+                case ("2"): {System.out.println(StudentActions.getStudentById(students)); break;}
+                case ("3"): {System.out.println(StudentActions.addStudent(students)); break;}
+                case ("4"): {System.out.println(StudentActions.removeStudent(students)); break;}
+                case ("5"): {System.out.println(StudentActions.upload(students)); break;}
+                default: {running = false; break;}
             }
 
         }
