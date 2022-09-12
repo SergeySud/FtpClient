@@ -3,7 +3,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ClientMain {
-    static Scanner scanner = new Scanner(System.in);
+    static Scanner scanner;
+    static Map<Integer, String> students;
 
     public static void main(String[] args) {
         try {
@@ -14,9 +15,10 @@ public class ClientMain {
     }
 
     public static void app() throws IOException {
+        scanner = new Scanner(System.in);
         System.out.println("Choose connection mode: 1 - active(not working, unable to establish connection with a listening socket), 2 - passive:");
         String input = scanner.next();
-        Map<Integer, String> students = ConnectionHandler.connect(input);
+        students = ConnectionHandler.connect(input);
         boolean running = true;
         while (running) {
             System.out.println("Choose action: 1 - print a list of students, 2 - get a student's information by id," +

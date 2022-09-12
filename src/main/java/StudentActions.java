@@ -28,7 +28,7 @@ public class StudentActions {
         Scanner scanner = ClientMain.scanner;
         System.out.println("Enter student's name");
         String name = scanner.next();
-        int newMax = students.keySet().stream().max(Integer::compareTo).orElse(1);
+        int newMax = getMaxId(students);
         students.put(newMax, name);
         return "Added by id " + newMax;
     }
@@ -54,5 +54,9 @@ public class StudentActions {
         out.write(JsonParser.parseMap(students));
         out.close();
         return "Uploaded successfully";
+    }
+
+    static int getMaxId(Map<Integer, String> students){
+        return students.keySet().stream().max(Integer::compareTo).orElse(0);
     }
 }
