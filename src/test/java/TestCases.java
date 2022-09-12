@@ -82,7 +82,7 @@ public class TestCases {
         new Random().nextBytes(array);
         String generatedString = new String(array, StandardCharsets.UTF_8);
         String input = "2" + EOL + address + EOL + user + EOL + pass + EOL + "3" + EOL
-                + generatedString + EOL + "5" + EOL + "6" + EOL;
+                + generatedString + EOL + "6" + EOL;
         setIn(input);
         ClientMain.app();
         String[] responses = (bytes.toString().split(EOL));
