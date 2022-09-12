@@ -9,17 +9,21 @@ import java.util.Scanner;
 
 public class ConnectionHandler {
 
+    static int localPort;
+    static String address;
+    static String[] credentials;
+
     public static Map<Integer, String> connect(String mode) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter server address");
-        String address = scanner.next();
-        String[] credentials = credentials();
+        System.out.println("Enter server address:");
+        address = scanner.next();
+        credentials = credentials();
 
 
         return switch (mode) {
-            case ("1") -> activeMode(address);
-            case ("2") -> passiveMode(address, credentials);
-            default -> passiveMode(address, credentials);
+            case ("1") -> activeMode();
+            case ("2") -> passiveMode();
+            default -> throw new IOException("Invalid input");
         };
 
     }
@@ -27,61 +31,74 @@ public class ConnectionHandler {
     public static String[] credentials() {
         Scanner scanner = new Scanner(System.in);
         String[] credentials = new String[]{"", ""};
-        System.out.println("Enter username");
+        System.out.println("Enter username:");
         credentials[0] = scanner.next();
-        System.out.println("Enter password");
+        System.out.println("Enter password:");
         credentials[1] = scanner.next();
 
         return credentials;
 
     }
 
-    public static Map<Integer, String> activeMode(String address) throws IOException {
+    public static Map<Integer, String> activeMode() throws IOException {
         Socket socket = new Socket(address, 21);
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
-        int localPort = socket.getLocalPort() + 1;
+        localPort = socket.getLocalPort() + 1;
         //Прослушиваем порт
-        Thread thread = new Thread(() -> {
-            System.out.println("Thread Running");
-            try {
-                ServerSocket serverSocket = new ServerSocket(localPort);
-                serverSocket.accept();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        thread.start();
-//
+//        Thread thread = new Thread(() -> {
+//            Socket clientSocket;
+//            PrintWriter out;
+//            BufferedReader in;
+//            System.out.println("Thread Running");
+//            try {
+//                ServerSocket serverSocket = new ServerSocket(localPort);
+//                clientSocket = serverSocket.accept();
+//                out = new PrintWriter(clientSocket.getOutputStream(), true);
+//                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//                serverSocket.accept();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
 //            }
-//            else { localPort += 1;}
-//        }
+//        });
+//        thread.start();
         byte[] buffer = new byte[10000];
         int length = is.read(buffer);
         String s = new String(buffer, 0, length);
         //        s = new String(buffer, 0, length);
-        //length = is.read(buffer);
         // Отправляем имя пользователя
         String str = "USER user\n";
         os.write(str.getBytes());
+        s = new String(buffer, 0, length);
+        length = is.read(buffer);
+        System.out.println(s);
         // Отправляем пароль
         str = "PASS testovpass\n";
         os.write(str.getBytes());
-        str = "LIST\n";
-        os.write(str.getBytes());
+        s = new String(buffer, 0, length);
+        length = is.read(buffer);
+        System.out.println(s);
         // Отправляем номер порта
         str = "PORT 192,0,0,1," + localPort / 256 + "," + localPort % 256 + "\n";
         os.write(str.getBytes());
+        s = new String(buffer, 0, length);
+        length = is.read(buffer);
         //Отправляем команду на копирование файла
         str = "TYPE A\n";
         os.write(str.getBytes());
         System.out.println(s);
         str = "RETR 1.txt\n";
         os.write(str.getBytes());
-        return passiveMode(address, credentials());
+        s = new String(buffer, 0, length);
+        length = is.read(buffer);
+        System.out.println(s);
+        is.close();
+        os.close();
+//        thread.stop();
+        return passiveMode();
     }
 
-    public static Map<Integer, String> passiveMode(String address, String[] credentials) throws IOException {
+    public static Map<Integer, String> passiveMode() throws IOException {
         URL url = new URL("ftp://" + credentials[0] + ":" + credentials[1] + "@" + address + ":21/1.txt");
         URLConnection conn = url.openConnection();
         InputStream is = conn.getInputStream();
@@ -102,27 +119,6 @@ public class ConnectionHandler {
             return false;
         } catch (IOException ignored) {
             return true;
-        }
-    }
-}
-
-class ShowList extends Thread {
-    public int port = 0;
-
-    public void run() {
-        try {
-            Socket socket = new Socket("192.168.0.1", this.port);
-            InputStream is = socket.getInputStream();
-            OutputStream os = socket.getOutputStream();
-            byte[] buffer = new byte[10000];
-            int length = is.read(buffer);
-            String s = new String(buffer, 0, length);
-            System.out.println(s);
-// Закрываем ссылку
-            is.close();
-            os.close();
-            socket.close();
-        } catch (Exception ex) {
         }
     }
 }
