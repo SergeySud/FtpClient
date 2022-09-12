@@ -4,6 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JsonParser {
+    private static final String EOL =
+            System.getProperty("line.separator");
+
     static Map<Integer, String> parseJson(String json) {
         Pattern patternId = Pattern.compile("(?<=\"id\": )(.*)(?=,(\\n|\\r\\n))");
         Matcher matcherId = patternId.matcher(json);

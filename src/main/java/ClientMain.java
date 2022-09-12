@@ -3,10 +3,17 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ClientMain {
+    static Scanner scanner = new Scanner(System.in);
 
+    public static void main(String[] args) {
+        try {
+            app();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
+    public static void app() throws IOException {
         System.out.println("Choose connection mode: 1 - active(not working, unable to establish connection with a listening socket), 2 - passive:");
         String input = scanner.next();
         Map<Integer, String> students = ConnectionHandler.connect(input);

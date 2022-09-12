@@ -13,7 +13,7 @@ public class ConnectionHandler {
     static String[] credentials;
 
     public static Map<Integer, String> connect(String mode) throws IOException {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ClientMain.scanner;
         System.out.println("Enter server address:");
         address = scanner.next();
         credentials = credentials();
@@ -43,7 +43,7 @@ public class ConnectionHandler {
     }
 
     public static String[] credentials() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ClientMain.scanner;
         String[] credentials = new String[]{"", ""};
         System.out.println("Enter username:");
         credentials[0] = scanner.next();

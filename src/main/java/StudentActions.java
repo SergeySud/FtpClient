@@ -18,14 +18,14 @@ public class StudentActions {
     }
 
     static String getStudentById(Map<Integer, String> students) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ClientMain.scanner;
         System.out.println("Enter student's id");
         int id = scanner.nextInt();
         return students.get(id);
     }
 
     static String addStudent(Map<Integer, String> students) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ClientMain.scanner;
         System.out.println("Enter student's name");
         String name = scanner.next();
         int newMax = students.keySet().stream().max(Integer::compareTo).orElse(1);
@@ -34,7 +34,7 @@ public class StudentActions {
     }
 
     static String removeStudent(Map<Integer, String> students) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = ClientMain.scanner;
         System.out.println("Enter student's id to remove");
         int id = scanner.nextInt();
         if (students.containsKey(id)) {

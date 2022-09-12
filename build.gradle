@@ -10,17 +10,21 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    // https://mvnrepository.com/artifact/org.testng/testng
+    testImplementation 'org.testng:testng:7.0.0'
+
+
+
 }
 
 test {
-    useJUnitPlatform()
+    useTestNG()
 }
 
 tasks.named('jar') {
     manifest {
         attributes('Implementation-Title': project.name,
-                'Implementation-Version': project.version)
+                'Implementation-Version': project.version,
+                'Main-class': "ClientMain")
     }
 }
