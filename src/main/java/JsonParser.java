@@ -1,9 +1,7 @@
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class JsonParser {
     static Map<Integer, String> parseJson(String json) {
@@ -26,18 +24,15 @@ public class JsonParser {
     }
 
     static String parseMap(Map<Integer, String> students) {
-        String json = "{\n" +
-                "\t\"students\": [\n";
+        StringBuilder json = new StringBuilder("{\n" +
+                "\t\"students\": [\n");
         for (Map.Entry<Integer, String> student : students.entrySet()
         ) {
-            json += "\t\t{\n" +
-                    "\t\t\t\"id\": " + student.getKey() + ",\n" +
-                    "\t\t\t\"name\": \"" + student.getValue() + "\"\n" +
-                    "\t\t},\n";
+            json.append("\t\t{\n" + "\t\t\t\"id\": ").append(student.getKey()).append(",\n")
+                    .append("\t\t\t\"name\": \"").append(student.getValue()).append("\"\n").append("\t\t},\n");
         }
-        json = json.substring(0, json.length() - 2);
-        json += "\n\t]\n" +
-                "}\n";
-        return json;
+        json = new StringBuilder(json.substring(0, json.length() - 2));
+        json.append("\n\t]\n" + "}\n");
+        return json.toString();
     }
 }

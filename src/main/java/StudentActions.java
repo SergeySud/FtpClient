@@ -1,7 +1,5 @@
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -48,7 +46,8 @@ public class StudentActions {
     }
 
     static String upload(Map<Integer, String> students) throws IOException {
-        URL url = new URL("ftp://" + ConnectionHandler.credentials[0] + ":" + ConnectionHandler.credentials[1] + "@" + ConnectionHandler.address + ":21/1.txt");
+        URL url = new URL("ftp://" + ConnectionHandler.credentials[0] + ":" + ConnectionHandler.credentials[1]
+                + "@" + ConnectionHandler.address + ":21/1.txt");
         URLConnection connection = url.openConnection();
         connection.setDoOutput(true);
         OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());

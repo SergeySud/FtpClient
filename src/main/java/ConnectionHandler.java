@@ -1,9 +1,8 @@
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -18,13 +17,28 @@ public class ConnectionHandler {
         System.out.println("Enter server address:");
         address = scanner.next();
         credentials = credentials();
+        Map<Integer, String> students = new HashMap<>();
+        {
+            {
 
 
-        return switch (mode) {
-            case ("1") -> activeMode();
-            case ("2") -> passiveMode();
-            default -> throw new IOException("Invalid input");
-        };
+                switch (mode) {
+                    case ("1"): {
+                        activeMode();
+                        break;
+                    }
+                    case ("2"): {
+                        passiveMode();
+                        break;
+                    }
+                    default: {
+                        throw new IOException("Invalid input");
+                    }
+                }
+            }
+        }
+
+        return students;
 
     }
 
@@ -107,7 +121,7 @@ public class ConnectionHandler {
         for (int result = bis.read(); result != -1; result = bis.read()) {
             buf.write((byte) result);
         }
-        String result = buf.toString(StandardCharsets.UTF_8);
+        String result = buf.toString();
         is.close();
         bis.close();
         buf.close();
