@@ -24,11 +24,11 @@ public class ConnectionHandler {
 
                 switch (mode) {
                     case ("1"): {
-                        activeMode();
+                        students = activeMode();
                         break;
                     }
                     case ("2"): {
-                        passiveMode();
+                        students = passiveMode();
                         break;
                     }
                     default: {
@@ -89,22 +89,22 @@ public class ConnectionHandler {
         // Отправляем пароль
         str = "PASS testovpass\n";
         os.write(str.getBytes());
-        s = new String(buffer, 0, length);
         length = is.read(buffer);
+        s = new String(buffer, 0, length);
         System.out.println(s);
         // Отправляем номер порта
         str = "PORT 192,0,0,1," + localPort / 256 + "," + localPort % 256 + "\n";
         os.write(str.getBytes());
-        s = new String(buffer, 0, length);
         length = is.read(buffer);
+        s = new String(buffer, 0, length);
         //Отправляем команду на копирование файла
         str = "TYPE A\n";
         os.write(str.getBytes());
         System.out.println(s);
         str = "RETR 1.txt\n";
         os.write(str.getBytes());
-        s = new String(buffer, 0, length);
         length = is.read(buffer);
+        s = new String(buffer, 0, length);
         System.out.println(s);
         is.close();
         os.close();

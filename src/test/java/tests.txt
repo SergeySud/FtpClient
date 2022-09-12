@@ -1,0 +1,11 @@
+Positive tests:
+	1. Attempt to log in.
+	2. Attempt to print a list of students.
+	3. Attempt to add a student.
+	4. Attempt to get information about a student.
+	5. Attempt to upload changes.
+	6. Attempt to exit the app.
+Negative tests:
+	1. Attempt to log in by invalid credentials.
+	2. Attempt to get information about a non-existing student.
+	3. Attempt to delete a non-existing student.
